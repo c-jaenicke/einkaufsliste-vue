@@ -103,14 +103,14 @@ export default {
                 <td>{{ item.amount }}</td>
                 <td>
                     <a href="#" @click="markAsOld(item.id)" class="btn btn-primary">
-                        <img alt="Gekauft" src="/src/icons/check-square-white.svg">
+                        <img alt="Gekauft" src="/src/assets/icons/check-square-white.svg">
                     </a>
                 </td>
                 <td>
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                             data-bs-target="#itemEditModal"
                             @click="openModal(item)">
-                        <img alt="Bearbeiten" src="/src/icons/edit-3-white.svg">
+                        <img alt="Bearbeiten" src="/src/assets/icons/edit-3-white.svg">
                     </button>
                 </td>
             </tr>
@@ -134,14 +134,14 @@ export default {
                     <td>{{ item.amount }}</td>
                     <td>
                         <a href="#" @click="markAsOld(item.id)" class="btn btn-primary">
-                            <img alt="Gekauft" src="/src/icons/check-square-white.svg">
+                            <img alt="Gekauft" src="/src/assets/icons/check-square-white.svg">
                         </a>
                     </td>
                     <td>
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                 data-bs-target="#itemEditModal"
                                 @click="openModal(item)">
-                            <img alt="Bearbeiten" src="/src/icons/edit-3-white.svg">
+                            <img alt="Bearbeiten" src="/src/assets/icons/edit-3-white.svg">
                         </button>
                     </td>
                 </tr>
