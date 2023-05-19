@@ -3,6 +3,7 @@ export default {
     name: 'ItemNewModal',
     data() {
         return {
+            items: [],
             amount: 0,
             name: '',
             note: '',
@@ -24,10 +25,10 @@ export default {
             }
         },
         createItem() {
+            this.items = []
             const endpoint = 'http://localhost:8080/item/new'
             console.log(endpoint)
             const requestOptions = {
-                mode: 'no-cors',
                 method: 'POST',
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({
@@ -39,6 +40,12 @@ export default {
                 })
             }
             fetch(endpoint, requestOptions)
+                .then((response) => response.json())
+                .then((result) =>
+                    result.forEach((thing) => {
+                        this.items.push(thing)
+                    })
+                )
                 .catch((error) => console.log('error', error))
         }
     }
@@ -84,7 +91,7 @@ export default {
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="$emit('close')">
                         Abbrechen
                     </button>
-                    <button type="button" class="btn btn-primary" @click="createItem(); $emit('close')" data-bs-dismiss="modal">
+                    <button type="button" class="btn btn-primary" @click="createItem(); $emit('new', this.items )" data-bs-dismiss="modal">
                         Speichern
                     </button>
                 </div>

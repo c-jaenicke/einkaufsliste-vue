@@ -3,6 +3,7 @@ export default {
     name: 'ItemEditModal',
     data() {
         return {
+            items: [],
             amount: 0,
             name: '',
             description: '',
@@ -40,12 +41,19 @@ export default {
                 .catch((error) => console.log('error', error))
         },
         deleteItem() {
+            this.items = []
             const endpoint = 'http://localhost:8080/item/' + this.data.id + '/delete'
             console.log(endpoint)
             const requestOptions = {
                 method: 'DELETE',
             }
             fetch(endpoint, requestOptions)
+                .then((response) => response.json())
+                .then((result) =>
+                    result.forEach((thing) => {
+                        this.items.push(thing)
+                    })
+                )
                 .catch((error) => console.log('error', error))
         }
     }
@@ -88,7 +96,7 @@ export default {
 
                 </div>
                 <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-danger" @click="deleteItem(); $emit('close')" data-bs-dismiss="modal">Löschen
+                    <button type="button" class="btn btn-danger" @click="deleteItem(); $emit('deleted', this.items)" data-bs-dismiss="modal">Löschen
                     </button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="$emit('close')">
                         Abbrechen

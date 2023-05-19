@@ -46,7 +46,6 @@ export default {
                     })
                 )
                 .catch((error) => console.log('error', error))
-
         },
         markAsOld(id) {
             this.items = []
@@ -77,8 +76,8 @@ export default {
 </script>
 
 <template>
-    <item-edit-modal v-if="modalOpen" @close="getItems()" :data="modalItem"></item-edit-modal>
-    <item-new-modal v-if="modalOpen" @close="getItems()"></item-new-modal>
+    <item-edit-modal v-if="modalOpen" @deleted="list => this.items = list" @close="getItems(); console.log('get items after edit')" :data="modalItem"></item-edit-modal>
+    <item-new-modal v-if="modalOpen" @new="list => this.items = list" @close="getItems(); console.log('getting itmes')" ></item-new-modal>
 
     <div style="display: flex; justify-content: space-between" class="">
         <button type="button" class="btn btn-info" @click="reloadPage">Neu laden</button>
