@@ -1,6 +1,6 @@
 <script>
 export default {
-    name: 'ItemNewModal',
+    name: 'item-new-modal',
     data() {
         return {
             items: [],
@@ -47,7 +47,12 @@ export default {
                     })
                 )
                 .catch((error) => console.log('error', error))
-        }
+        },
+        resetInput(){
+          this.name = ''
+          this.note =''
+          this.amount = 0
+        },
     }
 }
 </script>
@@ -88,10 +93,11 @@ export default {
 
                 </div>
                 <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="$emit('close')">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="$emit('close'); resetInput()">
                         Abbrechen
                     </button>
-                    <button type="button" class="btn btn-primary" @click="createItem(); $emit('new', this.items )" data-bs-dismiss="modal">
+                    <button type="button" class="btn btn-primary" @click="createItem(); $emit('new', this.items ); resetInput()"
+                            data-bs-dismiss="modal">
                         Speichern
                     </button>
                 </div>

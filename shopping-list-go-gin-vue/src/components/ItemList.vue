@@ -1,8 +1,6 @@
 <script setup>
-import './ItemEdit.vue'
-import ItemEditModal from "./ItemEdit.vue";
-import NewItemModal from "./NewItemModal.vue";
-import ItemNewModal from "./NewItemModal.vue";
+import ItemEditModal from "./ItemEditModal.vue";
+import ItemNewModal from "./ItemNewModal.vue";
 </script>
 
 <script>
@@ -52,7 +50,6 @@ export default {
             const endpoint = 'http://localhost:8080/item/' + id + '/switch'
             console.log(endpoint)
             const requestOptions = {
-                mode: 'no-cors',
                 method: 'POST',
                 redirect: 'follow'
             }
@@ -65,7 +62,7 @@ export default {
                 )
                 .catch((error) => console.log('error', error))
         },
-        reloadPage(){
+        reloadPage() {
             window.location.reload()
         }
     },
@@ -76,12 +73,17 @@ export default {
 </script>
 
 <template>
-    <item-edit-modal v-if="modalOpen" @deleted="list => this.items = list" @close="getItems(); console.log('get items after edit')" :data="modalItem"></item-edit-modal>
-    <item-new-modal v-if="modalOpen" @new="list => this.items = list" @close="getItems(); console.log('getting itmes')" ></item-new-modal>
+    // TODO check if getItems() can be removed from close event, since new item lists now gets returned over custom event
+    <item-edit-modal v-if="modalOpen" @deleted="list => this.items = list"
+                     @close="getItems()" :data="modalItem"></item-edit-modal>
+    <item-new-modal v-if="modalOpen" @new="list => this.items = list"
+                    @close="getItems()"></item-new-modal>
 
     <div style="display: flex; justify-content: space-between" class="">
         <button type="button" class="btn btn-info" @click="reloadPage">Neu laden</button>
-        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#itemNewModal">Neuer Artikel</button>
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#itemNewModal">
+            Neuer Artikel
+        </button>
     </div>
     <br>
 
@@ -102,7 +104,7 @@ export default {
                 <td>{{ item.amount }}</td>
                 <td>
                     <a href="#" @click="markAsOld(item.id)" class="btn btn-primary">
-                        <img alt="Gekauft" src="/src/assets/icons/check-square-white.svg">
+                        <img alt="Gekauft" src="/src/assets/icons/check-white.svg">
                     </a>
                 </td>
                 <td>
@@ -128,12 +130,12 @@ export default {
                     <th></th>
                 </tr>
                 <tr v-for="item in getOld">
-                    <td>{{ item.name }} {{ item.id }}</td>
+                    <td>{{ item.name }}</td>
                     <td>{{ item.note }}</td>
                     <td>{{ item.amount }}</td>
                     <td>
                         <a href="#" @click="markAsOld(item.id)" class="btn btn-primary">
-                            <img alt="Gekauft" src="/src/assets/icons/check-square-white.svg">
+                            <img alt="Gekauft" src="/src/assets/icons/refresh-cw-white.svg">
                         </a>
                     </td>
                     <td>

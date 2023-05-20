@@ -1,6 +1,6 @@
 <script>
 export default {
-    name: 'ItemEditModal',
+    name: 'item-edit-modal',
     data() {
         return {
             items: [],
