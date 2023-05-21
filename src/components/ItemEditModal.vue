@@ -1,4 +1,5 @@
 <script>
+const url = import.meta.env.VITE_API_BASE_URL
 export default {
     name: 'item-edit-modal',
     data() {
@@ -6,7 +7,7 @@ export default {
             items: [],
             amount: 0,
             name: '',
-            description: '',
+            note: '',
         }
     },
     props: {
@@ -30,8 +31,7 @@ export default {
             }
         },
         updateItem() {
-            const endpoint = 'http://localhost:8080/item/' + this.data.id + '/update'
-            console.log(endpoint)
+            const endpoint = 'http://' + url + '/item/' + this.data.id + '/update'
             const requestOptions = {
                 method: 'PUT',
                 headers: {"Content-Type": "application/json"},
@@ -42,7 +42,7 @@ export default {
         },
         deleteItem() {
             this.items = []
-            const endpoint = 'http://localhost:8080/item/' + this.data.id + '/delete'
+            const endpoint = 'http://' + url + '/item/' + this.data.id + '/delete'
             console.log(endpoint)
             const requestOptions = {
                 method: 'DELETE',
@@ -96,7 +96,8 @@ export default {
 
                 </div>
                 <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-danger" @click="deleteItem(); $emit('deleted', this.items)" data-bs-dismiss="modal">Löschen
+                    <button type="button" class="btn btn-danger" @click="deleteItem(); $emit('deleted', this.items)"
+                            data-bs-dismiss="modal">Löschen
                     </button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="$emit('close')">
                         Abbrechen
@@ -110,7 +111,3 @@ export default {
     </div>
 
 </template>
-
-<style scoped>
-
-</style>

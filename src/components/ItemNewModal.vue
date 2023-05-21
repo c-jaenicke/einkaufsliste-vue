@@ -1,4 +1,5 @@
 <script>
+const url = import.meta.env.VITE_API_BASE_URL
 export default {
     name: 'item-new-modal',
     data() {
@@ -26,8 +27,7 @@ export default {
         },
         createItem() {
             this.items = []
-            const endpoint = 'http://localhost:8080/item/new'
-            console.log(endpoint)
+            const endpoint = 'http://'+ url + '/item/new'
             const requestOptions = {
                 method: 'POST',
                 headers: {"Content-Type": "application/json"},

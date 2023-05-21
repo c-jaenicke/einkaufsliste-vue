@@ -4,6 +4,8 @@ import ItemNewModal from "./ItemNewModal.vue";
 </script>
 
 <script>
+const devMode = import.meta.env.MODE
+const url = import.meta.env.VITE_API_BASE_URL
 export default {
     name: 'ItemList',
     data() {
@@ -26,12 +28,12 @@ export default {
     methods: {
         openModal(data) {
             this.modalItem = data
+            // uncommenting this line means you have to double-click each button
             // this.modalOpen = true
         },
         getItems() {
             this.items = []
-            const endpoint = 'http://localhost:8080/items/all'
-            console.log(endpoint)
+            const endpoint = 'http://' + url + '/items/all'
             const requestOptions = {
                 method: 'GET',
                 redirect: 'follow'
@@ -47,7 +49,7 @@ export default {
         },
         markAsOld(id) {
             this.items = []
-            const endpoint = 'http://localhost:8080/item/' + id + '/switch'
+            const endpoint = 'http://' + url + '/item/' + id + '/switch'
             console.log(endpoint)
             const requestOptions = {
                 method: 'POST',
@@ -73,11 +75,8 @@ export default {
 </script>
 
 <template>
-    // TODO check if getItems() can be removed from close event, since new item lists now gets returned over custom event
-    <item-edit-modal v-if="modalOpen" @deleted="list => this.items = list"
-                     @close="getItems()" :data="modalItem"></item-edit-modal>
-    <item-new-modal v-if="modalOpen" @new="list => this.items = list"
-                    @close="getItems()"></item-new-modal>
+    <item-edit-modal v-if="modalOpen" @deleted="list => items = list" :data="modalItem"></item-edit-modal>
+    <item-new-modal v-if="modalOpen" @new="list => items = list"></item-new-modal>
 
     <div style="display: flex; justify-content: space-between" class="">
         <button type="button" class="btn btn-info" @click="reloadPage">Neu laden</button>
@@ -88,7 +87,6 @@ export default {
     <br>
 
     <h2>Zu besorgen: {{ getNew.length }} Artikel</h2>
-
     <div class="item-list-new">
         <table>
             <tr>
@@ -99,19 +97,20 @@ export default {
                 <th></th>
             </tr>
             <tr v-for="item in getNew">
-                <td>{{ item.name }} {{ item.id }}</td>
+                <td v-if="devMode === 'development'">{{ item.name }} {{ item.id }}</td>
+                <td v-else>{{ item.name }}</td>
                 <td>{{ item.note }}</td>
                 <td>{{ item.amount }}</td>
                 <td>
-                    <a href="#" @click="markAsOld(item.id)" class="btn btn-primary">
+                    <button type="button" class="btn btn-primary" @click="markAsOld(item.id)">
                         <img alt="Gekauft" src="/src/assets/icons/check-white.svg">
-                    </a>
+                    </button>
                 </td>
                 <td>
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                    <button type="button" class="btn btn-warning" data-bs-toggle="modal"
                             data-bs-target="#itemEditModal"
                             @click="openModal(item)">
-                        <img alt="Bearbeiten" src="/src/assets/icons/edit-3-white.svg">
+                        <img alt="Bearbeiten" src="/src/assets/icons/edit-3.svg">
                     </button>
                 </td>
             </tr>
@@ -119,7 +118,7 @@ export default {
 
         <br>
 
-        <h2>Zuletzt gekauft:</h2>
+        <h2>Zuletzt gekaufte Artikel</h2>
         <div class="item-list-old">
             <table>
                 <tr>
@@ -130,24 +129,31 @@ export default {
                     <th></th>
                 </tr>
                 <tr v-for="item in getOld">
-                    <td>{{ item.name }}</td>
+                    <td v-if="devMode === 'development'">{{ item.name }} {{ item.id }}</td>
+                    <td v-else>{{ item.name }}</td>
                     <td>{{ item.note }}</td>
                     <td>{{ item.amount }}</td>
                     <td>
-                        <a href="#" @click="markAsOld(item.id)" class="btn btn-primary">
-                            <img alt="Gekauft" src="/src/assets/icons/refresh-cw-white.svg">
-                        </a>
+                        <button type="button" class="btn btn-info" @click="markAsOld(item.id)">
+                            <img alt="Erneut kaufen" src="/src/assets/icons/check.svg">
+                        </button>
                     </td>
                     <td>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        <button type="button" class="btn btn-warning" data-bs-toggle="modal"
                                 data-bs-target="#itemEditModal"
                                 @click="openModal(item)">
-                            <img alt="Bearbeiten" src="/src/assets/icons/edit-3-white.svg">
+                            <img alt="Bearbeiten" src="/src/assets/icons/edit-3.svg">
                         </button>
                     </td>
                 </tr>
             </table>
         </div>
+    </div>
+
+    <div v-if="devMode === 'development'">
+        <ul>
+            <li v-for="item in items">{{ item }}</li>
+        </ul>
     </div>
 </template>
 
