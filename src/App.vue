@@ -8,7 +8,6 @@ import {RouterLink, RouterView} from 'vue-router'
             <div class="container-fluid">
                 <a class="navbar-brand" href="#">
                     <img src="./assets/logo.svg" width="45">
-                    shopping-list-go-gin
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
