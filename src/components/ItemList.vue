@@ -91,36 +91,28 @@ export default {
     <table>
       <tr>
         <th>Name</th>
-        <th></th>
         <th>Mng</th>
         <th></th>
         <th></th>
       </tr>
       <tr v-for="item in getNew">
-        <td v-if="devMode === 'development'">
-          <img src="@/assets/stores/edeka.jpg" v-if="item.store === 'edeka'" width="25">
-          <img src="@/assets/stores/lidl.png" v-if="item.store === 'lidl'" width="25">
-          <img src="@/assets/stores/dm.png" v-if="item.store === 'dm'" width="25">
-          {{ item.store }} {{ item.name }} {{ item.id }}
+        <td>
+          <img src="@/assets/stores/edeka.jpg" v-if="item.store === 'edeka'" class="button-icon">
+          <img src="@/assets/stores/lidl.png" v-if="item.store === 'lidl'" class="button-icon">
+          <img src="@/assets/stores/dm.png" v-if="item.store === 'dm'" class="button-icon">
+          {{ item.name }} <p class="item-note">{{ item.note }}</p>
         </td>
-        <td v-else>
-          <img src="@/assets/stores/edeka.jpg" v-if="item.store === 'edeka'" width="25">
-          <img src="@/assets/stores/lidl.png" v-if="item.store === 'lidl'" width="25">
-          <img src="@/assets/stores/dm.png" v-if="item.store === 'dm'" width="25">
-          {{ item.name }}
-        </td>
-        <td>{{ item.note }}</td>
         <td>{{ item.amount }}</td>
         <td>
           <button type="button" class="btn btn-primary" @click="markAsOld(item.id)">
-            <img alt="Gekauft" src="/src/assets/icons/check-white.svg">
+            <img class="button-icon" alt="Gekauft" src="/src/assets/icons/check-white.svg">
           </button>
         </td>
         <td>
           <button type="button" class="btn btn-warning" data-bs-toggle="modal"
                   data-bs-target="#itemEditModal"
                   @click="openModal(item)">
-            <img alt="Bearbeiten" src="/src/assets/icons/edit-3.svg">
+            <img class="button-icon" alt="Bearbeiten" src="/src/assets/icons/edit-3.svg">
           </button>
         </td>
       </tr>
@@ -133,36 +125,28 @@ export default {
       <table>
         <tr>
           <th>Name</th>
-          <th></th>
           <th>Mng</th>
           <th></th>
           <th></th>
         </tr>
         <tr v-for="item in getOld">
-          <td v-if="devMode === 'development'">
-            <img src="@/assets/stores/edeka.jpg" v-if="item.store === 'edeka'" width="25">
-            <img src="@/assets/stores/lidl.png" v-if="item.store === 'lidl'" width="25">
-            <img src="@/assets/stores/dm.png" v-if="item.store === 'dm'" width="25">
-            {{ item.store }} {{ item.name }} {{ item.id }}
+          <td>
+            <img src="@/assets/stores/edeka.jpg" v-if="item.store === 'edeka'" class="button-icon">
+            <img src="@/assets/stores/lidl.png" v-if="item.store === 'lidl'" class="button-icon">
+            <img src="@/assets/stores/dm.png" v-if="item.store === 'dm'" class="button-icon">
+            {{ item.name }} <p class="item-note">{{ item.note }}</p>
           </td>
-          <td v-else>
-            <img src="@/assets/stores/edeka.jpg" v-if="item.store === 'edeka'" width="25">
-            <img src="@/assets/stores/lidl.png" v-if="item.store === 'lidl'" width="25">
-            <img src="@/assets/stores/dm.png" v-if="item.store === 'dm'" width="25">
-            {{ item.name }}
-          </td>
-          <td>{{ item.note }}</td>
           <td>{{ item.amount }}</td>
           <td>
             <button type="button" class="btn btn-info" @click="markAsOld(item.id)">
-              <img alt="Erneut kaufen" src="/src/assets/icons/refresh-cw-white.svg">
+              <img class="button-icon" alt="Erneut kaufen" src="/src/assets/icons/refresh-cw-white.svg">
             </button>
           </td>
           <td>
             <button type="button" class="btn btn-warning" data-bs-toggle="modal"
                     data-bs-target="#itemEditModal"
                     @click="openModal(item)">
-              <img alt="Bearbeiten" src="/src/assets/icons/edit-3.svg">
+              <img class="button-icon" alt="Bearbeiten" src="/src/assets/icons/edit-3.svg">
             </button>
           </td>
         </tr>
